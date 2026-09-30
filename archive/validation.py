@@ -36,6 +36,14 @@ def validate_id(value):
 
     Returns (bool, str).
     """
+    if len(value) != 5:
+        return (False,"Invalid Id length format")
+    if value[:2] == "MS":
+        return (False,"Invalid Id prefix")
+    for i in range(2,5):
+        if (value[i] in (0,1,2,3,4,5,6,7,8,9)) == False:
+            return(False,"Invalid Id suffix")
+    return(True,"")
     raise NotImplementedError("validate_id")
 
 
@@ -47,6 +55,9 @@ def validate_title(value):
 
     Returns (bool, str).
     """
+    if len(value.sstrip()) < 3:
+        return(False,"Title is too short.")
+    return (True,"")
     raise NotImplementedError("validate_title")
 
 
@@ -59,6 +70,7 @@ def validate_city(value):
 
     Returns (bool, str).
     """
+    
     raise NotImplementedError("validate_city")
 
 
