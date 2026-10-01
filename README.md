@@ -1,6 +1,6 @@
 # The Archive
 
-**Pair:** *(your two names)* **Repository:** *(link)*
+**Pair:** *(Luis, Imelda)* **Repository:** *(link)*
 
 > This file is Part E of the assignment — **15 marks**. Replace every placeholder below. Delete the instruction lines in italics as you go. Marks come from the reasoning, not the length.
 
@@ -12,11 +12,11 @@
 
 | Field | Type | Example | If it is unknown, we… |
 | --- | --- | --- | --- |
-| id |  | `MS001` |  |
-| title |  |  |  |
-| city |  |  |  |
-| year |  |  |  |
-| condition |  |  |  |
+| id | string | `MS001` |Raise an error  |
+| title | string | "Tarikh al-Sudan" | Raise an error |
+| city |  string| "Timbuktu"|Raise an error|
+| year | integer | 1655 | Raise an error |
+| condition | string |"fragile" |Raise an error  |
 
 ---
 
