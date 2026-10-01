@@ -19,6 +19,8 @@ FIELD_NAMES = ["id", "title", "city", "year", "condition"]
 
 
 def parse_line(line):
+   
+   
     """Turn one CSV line into a dict with the five FIELD_NAMES as keys.
 
     Whitespace around the line (including the trailing newline) is stripped.
@@ -31,6 +33,14 @@ def parse_line(line):
 
     Returns dict.
     """
+    parts = line.strip().split(',')
+    fields = [part.strip() for part in parts]
+    if len(fields) != 5:
+        raise MalformedRecordError(f"Line does not contain exactly 5 fields: {line}")
+    return dict(zip(FIELD_NAMES, fields))
+
+
+
     raise NotImplementedError("parse_line")
 
 

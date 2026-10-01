@@ -48,7 +48,7 @@ We choose 1100-2026 as our range" we chose 2026 because we want to include curre
 - **(b)** Store the year as text, so anything can be recorded.
 - **(c)** Store `1590` plus a separate `approximate` flag.
 
-**Our choice:**
+**Our choice:*store the year as text, so anything can be recorded*
 
 **Why:**
 
