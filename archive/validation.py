@@ -25,7 +25,7 @@ KNOWN_CITIES = ["Timbuktu", "Djenne", "Gao", "Walata", "Chinguetti"]
 VALID_CONDITIONS = ["fragile", "fair", "good"]
 
 MIN_YEAR = 1100
-MAX_YEAR = 1900
+MAX_YEAR = 2026
 
 
 def validate_id(value):
@@ -36,6 +36,7 @@ def validate_id(value):
 
     Returns (bool, str).
     """
+    value = value.strip()
     if len(value) != 5:
         return (False,"Invalid Id length format")
     if value[:2] == "MS":
@@ -55,7 +56,7 @@ def validate_title(value):
 
     Returns (bool, str).
     """
-    if len(value.sstrip()) < 3:
+    if len(value.strip()) < 3:
         return(False,"Title is too short.")
     return (True,"")
     raise NotImplementedError("validate_title")
@@ -70,6 +71,10 @@ def validate_city(value):
 
     Returns (bool, str).
     """
+    value = value.capitalise()
+    if value in KNOWN_CITIES:
+        return(True,"")
+    return(False, "Unknown City")
     
     raise NotImplementedError("validate_city")
 
@@ -86,6 +91,15 @@ def validate_year(value):
 
     Returns (bool, str).
     """
+    value = value.strip().lstrip("c.")
+    try:
+        value = int(value)
+    except (ValueError,TypeError):
+        return(False,"Not a valid year due to non-numeric characters")
+    if value < MIN_YEAR or value > MAX_YEAR:
+        return (False,"Not in year range")
+    return (True,"")
+
     raise NotImplementedError("validate_year")
 
 
@@ -97,6 +111,10 @@ def validate_condition(value):
 
     Returns (bool, str).
     """
+    value = value.lcase()
+    if value in VALID_CONDITIONS:
+        return (True)
+    return (False, "Not a recorded condition")
     raise NotImplementedError("validate_condition")
 
 
@@ -111,4 +129,5 @@ def validate_record(record):
 
     Do not re-write the rules here. Call the five functions above.
     """
+
     raise NotImplementedError("validate_record")
