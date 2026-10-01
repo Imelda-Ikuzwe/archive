@@ -1,6 +1,6 @@
 # The Archive
 
-**Pair:** *(Luis, Imelda)* **Repository:** *(link)*
+**Pair:** *(Luis, Imelda)* **Repository:** *(https://github.com/AfricanOlympiadAcademy/archive.git)*
 
 > This file is Part E of the assignment — **15 marks**. Replace every placeholder below. Delete the instruction lines in italics as you go. Marks come from the reasoning, not the length.
 
@@ -24,11 +24,11 @@
 
 | Field | Rule(s) | Rejects (example) |
 | --- | --- | --- |
-| id |  |  |
-| title |  |  |
-| city |  |  |
-| year |  |  |
-| condition |  |  |
+| id |length has to be 5 and first two letters:MS and the rest three characters must be 3 | MS0012 |
+| title |checks the length if it is too short("3 characters not counting white space>"), if not it rejects it | A |
+| city |if it is not in known cities without depending on capitalization then it gives an error | kano |
+| year |strip out the white space and see if it is in the year range and also of it has the correct characters which are numbers  | c.1560 |
+| condition | if it is the valid conditions we accept, if it is not we reject it | excellent |
 
 ### Who decided the year range?
 
