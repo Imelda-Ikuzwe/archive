@@ -113,7 +113,7 @@ def validate_condition(value):
     """
     value = value.lcase()
     if value in VALID_CONDITIONS:
-        return (True)
+        return (True, "")
     return (False, "Not a recorded condition")
     raise NotImplementedError("validate_condition")
 
@@ -129,5 +129,14 @@ def validate_record(record):
 
     Do not re-write the rules here. Call the five functions above.
     """
+    remarks = []
 
+    remarks.append(validate_id(record["id"])[1])
+    remarks.append(validate_title(record["title"])[1])
+    remarks.append(validate_city(record["city"])[1])
+    remarks.append(validate_year(record["year"])[1])
+    remarks.append(validate_condition(record["condition"])[1])
+    if remarks == ["","","","",""]:
+        return []
+    return remarks
     raise NotImplementedError("validate_record")
