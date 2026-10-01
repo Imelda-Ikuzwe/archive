@@ -34,6 +34,8 @@
 
 *The brief gave you 1100–1900. That was a decision someone made, and it has costs. 1900 excludes a modern copy of an old text. 1100 excludes anything earlier. State whether you accept these bounds or would change them, and say what your choice throws away. An undefended range scores 1 of the 4 marks.*
 
+We choose 1100-2026 as our range" we chose 2026 because we want to include current records because we do not want to use old data, the current data matters. we do not want to include anything before 1100 because it would be outdated and would not help us much in the modern world.
+
 ---
 
 ## 3\. The `c.1590` decision *(3 marks)*
