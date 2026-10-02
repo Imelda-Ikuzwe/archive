@@ -25,7 +25,7 @@ KNOWN_CITIES = ["Timbuktu", "Djenne", "Gao", "Walata", "Chinguetti"]
 VALID_CONDITIONS = ["fragile", "fair", "good"]
 
 MIN_YEAR = 1100
-MAX_YEAR = 2026
+MAX_YEAR = 1900
 
 
 def validate_id(value):
@@ -39,7 +39,7 @@ def validate_id(value):
     value = value.strip()
     if len(value) != 5:
         return (False,"Invalid Id length format")
-    if value[:2] == "MS":
+    if value[:2] != "MS":
         return (False,"Invalid Id prefix")
     for i in range(2,5):
         if (value[i] in (0,1,2,3,4,5,6,7,8,9)) == False:
@@ -71,7 +71,7 @@ def validate_city(value):
 
     Returns (bool, str).
     """
-    value = value.capitalise()
+    value = value.capitalize()
     if value in KNOWN_CITIES:
         return(True,"")
     return(False, "Unknown City")
@@ -111,7 +111,7 @@ def validate_condition(value):
 
     Returns (bool, str).
     """
-    value = value.lcase()
+    value = value.lower()
     if value in VALID_CONDITIONS:
         return (True, "")
     return (False, "Not a recorded condition")
