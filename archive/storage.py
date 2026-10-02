@@ -17,8 +17,8 @@ from archive.errors import MalformedRecordError
 
 FIELD_NAMES = ["id", "title", "city", "year", "condition"]
 
-
 def parse_line(line):
+   
     """Turn one CSV line into a dict with the five FIELD_NAMES as keys.
 
     Whitespace around the line (including the trailing newline) is stripped.
@@ -31,7 +31,14 @@ def parse_line(line):
 
     Returns dict.
     """
-    raise NotImplementedError("parse_line")
+    if not line.strip(): return None
+    fields = [f.strip() for f in line.strip().split(',')]
+    if len(fields) != 5:
+        raise MalformedRecordError(f"Line does not contain exactly 5 fields: {line}")
+    return dict(zip(FIELD_NAMES, fields))
+
+
+    #raise NotImplementedError("parse_line")
 
 
 def load_archive(path):
@@ -50,7 +57,32 @@ def load_archive(path):
 
     Returns (list, list).
     """
-    raise NotImplementedError("load_archive")
+    valid_records = []
+    rejected_lines = []
+    
+    try:
+        with open(path, 'r', encoding='utf-8') as f:
+            for original_line in f:
+                # Blank lines are skipped silently
+                if not original_line.strip():
+                    continue
+                try:
+                    record = parse_line(original_line)
+                    if record:
+                        # Once you implement validate_record(record), add that check here:
+                        # e.g., if validate_record(record):
+                        valid_records.append(record)
+                except MalformedRecordError:
+                    rejected_lines.append(original_line)
+    except FileNotFoundError:
+        # A file that does not exist is not an error; returns empty lists
+        return [], []
+        
+    return valid_records, rejected_lines
+    
+
+
+    #raise NotImplementedError("load_archive")
 
 
 def save_archive(path, records):
@@ -60,4 +92,12 @@ def save_archive(path, records):
 
     Returns None.
     """
-    raise NotImplementedError("save_archive")
+    with open(path, 'w', encoding='utf-8') as f:
+        for record in records:
+            # Extract fields in exact order; default to empty string if a key is missing
+            row = [str(record.get(field, '')) for field in FIELD_NAMES]
+            # Join fields with commas and terminate the record with a newline character
+            f.write(','.join(row) + '\n')
+    return None
+    #raise NotImplementedError("save_archive")
+ 

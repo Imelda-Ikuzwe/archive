@@ -1,6 +1,6 @@
 # The Archive
 
-**Pair:** *(your two names)* **Repository:** *(link)*
+**Pair:** *(Luis, Imelda)* **Repository:** *(https://github.com/AfricanOlympiadAcademy/archive.git)*
 
 > This file is Part E of the assignment — **15 marks**. Replace every placeholder below. Delete the instruction lines in italics as you go. Marks come from the reasoning, not the length.
 
@@ -12,11 +12,11 @@
 
 | Field | Type | Example | If it is unknown, we… |
 | --- | --- | --- | --- |
-| id |  | `MS001` |  |
-| title |  |  |  |
-| city |  |  |  |
-| year |  |  |  |
-| condition |  |  |  |
+| id | string | `MS001` |Raise an error  |
+| title | string | "Tarikh al-Sudan" | Raise an error |
+| city |  string| "Timbuktu"|Raise an error|
+| year | integer | 1655 | Raise an error |
+| condition | string |"fragile" |Raise an error  |
 
 ---
 
@@ -24,15 +24,17 @@
 
 | Field | Rule(s) | Rejects (example) |
 | --- | --- | --- |
-| id |  |  |
-| title |  |  |
-| city |  |  |
-| year |  |  |
-| condition |  |  |
+| id |length has to be 5 and first two letters:MS and the rest three characters must be 3 | MS0012 |
+| title |checks the length if it is too short("3 characters not counting white space>"), if not it rejects it | A |
+| city |if it is not in known cities without depending on capitalization then it gives an error | kano |
+| year |strip out the white space and see if it is in the year range and also of it has the correct characters which are numbers  | c.1560 |
+| condition | if it is the valid conditions we accept, if it is not we reject it | excellent |
 
 ### Who decided the year range?
 
 *The brief gave you 1100–1900. That was a decision someone made, and it has costs. 1900 excludes a modern copy of an old text. 1100 excludes anything earlier. State whether you accept these bounds or would change them, and say what your choice throws away. An undefended range scores 1 of the 4 marks.*
+
+We choose 1100-2026 as our range" we chose 2026 because we want to include current records because we do not want to use old data, the current data matters. we do not want to include anything before 1100 because it would be outdated and would not help us much in the modern world.
 
 ---
 
@@ -46,7 +48,7 @@
 - **(b)** Store the year as text, so anything can be recorded.
 - **(c)** Store `1590` plus a separate `approximate` flag.
 
-**Our choice:**
+**Our choice:*store the year as text, so anything can be recorded*
 
 **Why:**
 
