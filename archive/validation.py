@@ -36,7 +36,15 @@ def validate_id(value):
 
     Returns (bool, str).
     """
-    h
+    value = value.strip()
+    if len(value) != 5:
+        return (False,"Invalid Id length format")
+    if value[:2] != "MS":
+        return (False,"Invalid Id prefix")
+    for i in range(2,5):
+        if (value[i] in ("0","1","2","3","4","5","6","7","8","9")) == False:
+            return(False,"Invalid Id suffix")
+    return(True,"")
     raise NotImplementedError("validate_id")
 
 
@@ -48,6 +56,9 @@ def validate_title(value):
 
     Returns (bool, str).
     """
+    if len(value.strip()) < 3:
+        return(False,"Title is too short.")
+    return (True,"")
     raise NotImplementedError("validate_title")
 
 
@@ -60,6 +71,11 @@ def validate_city(value):
 
     Returns (bool, str).
     """
+    value = value.lower().capitalize()
+    if value in KNOWN_CITIES:
+        return(True,"")
+    return(False, "Unknown City")
+    
     raise NotImplementedError("validate_city")
 
 
@@ -75,6 +91,15 @@ def validate_year(value):
 
     Returns (bool, str).
     """
+    value = value.strip()
+    try:
+        value = int(value)
+    except (ValueError,TypeError):
+        return(False,"Not a valid year due to non-numeric characters")
+    if value < MIN_YEAR or value > MAX_YEAR:
+        return (False,"Not in year range")
+    return (True,"")
+
     raise NotImplementedError("validate_year")
 
 
@@ -86,6 +111,10 @@ def validate_condition(value):
 
     Returns (bool, str).
     """
+    value = value.lower()
+    if value in VALID_CONDITIONS:
+        return (True, "")
+    return (False, "Not a recorded condition")
     raise NotImplementedError("validate_condition")
 
 
@@ -100,4 +129,19 @@ def validate_record(record):
 
     Do not re-write the rules here. Call the five functions above.
     """
+    remarks = []
+
+    validation_map = [
+        ("id", validate_id),
+        ("title", validate_title),
+        ("city", validate_city),
+        ("year", validate_year),
+        ("condition", validate_condition),
+    ]
+
+    for key, validator in validation_map:
+        is_valid, reason = validator(record[key])
+        if not is_valid:
+            remarks.append(reason)
+    return remarks
     raise NotImplementedError("validate_record")
