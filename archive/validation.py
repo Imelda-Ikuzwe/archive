@@ -71,7 +71,7 @@ def validate_city(value):
 
     Returns (bool, str).
     """
-    value = value.capitalize()
+    value = value.lower().capitalize()
     if value in KNOWN_CITIES:
         return(True,"")
     return(False, "Unknown City")
