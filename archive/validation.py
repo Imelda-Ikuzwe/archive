@@ -42,7 +42,7 @@ def validate_id(value):
     if value[:2] != "MS":
         return (False,"Invalid Id prefix")
     for i in range(2,5):
-        if (value[i] in ("0","1","2","3","4","5","6","7","8","9")) == False:
+        if (value[i] in (0,1,2,3,4,5,6,7,8,9)) == False:
             return(False,"Invalid Id suffix")
     return(True,"")
     raise NotImplementedError("validate_id")
@@ -91,7 +91,7 @@ def validate_year(value):
 
     Returns (bool, str).
     """
-    value = value.strip()
+    value = value.strip().lstrip("c.")
     try:
         value = int(value)
     except (ValueError,TypeError):
