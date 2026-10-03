@@ -42,7 +42,7 @@ def validate_id(value):
     if value[:2] != "MS":
         return (False,"Invalid Id prefix")
     for i in range(2,5):
-        if (value[i] in (0,1,2,3,4,5,6,7,8,9)) == False:
+        if (value[i] in ("0","1","2","3","4","5","6","7","8","9")) == False:
             return(False,"Invalid Id suffix")
     return(True,"")
     raise NotImplementedError("validate_id")
@@ -91,7 +91,7 @@ def validate_year(value):
 
     Returns (bool, str).
     """
-    value = value.strip().lstrip("c.")
+    value = value.strip()
     try:
         value = int(value)
     except (ValueError,TypeError):
@@ -131,12 +131,17 @@ def validate_record(record):
     """
     remarks = []
 
-    remarks.append(validate_id(record["id"])[1])
-    remarks.append(validate_title(record["title"])[1])
-    remarks.append(validate_city(record["city"])[1])
-    remarks.append(validate_year(record["year"])[1])
-    remarks.append(validate_condition(record["condition"])[1])
-    if remarks == ["","","","",""]:
-        return []
+    validation_map = [
+        ("id", validate_id),
+        ("title", validate_title),
+        ("city", validate_city),
+        ("year", validate_year),
+        ("condition", validate_condition),
+    ]
+
+    for key, validator in validation_map:
+        is_valid, reason = validator(record[key])
+        if not is_valid:
+            remarks.append(reason)
     return remarks
     raise NotImplementedError("validate_record")
