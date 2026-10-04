@@ -1,6 +1,6 @@
 # The Archive
 
-**Pair:** *(your two names)* **Repository:** *(link)*
+**Pair:** *(Luis, Imelda)* **Repository:** *(https://github.com/Imelda-Ikuzwe/archive.git)*
 
 > This file is Part E of the assignment — **15 marks**. Replace every placeholder below. Delete the instruction lines in italics as you go. Marks come from the reasoning, not the length.
 
