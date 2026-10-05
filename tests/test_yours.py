@@ -104,3 +104,29 @@ def test_year_boundary():
 #   load_archive         missing file, the clean file, the messy file
 #   save_archive         round trip: save then load gives back what you saved
 #   queries              empty list, ties, case-insensitive city
+def test_id_format():
+    assert validate_id("MS123")[0] is True
+    assert validate_id("ms123")[0] is False
+    assert validate_id("M123")[0] is False
+    assert validate_id("MS1234")[0] is False
+
+def test_id_empty():
+    assert validate_id("")[0] is False
+
+def test_title_whitespace():
+    assert validate_title("   ")[0] is False
+
+def test_title_edgecase():
+    assert validate_title("Try  ")[0] is True
+
+def test_title_short():
+    assert validate_title("ab       ")[0] is False
+
+def test_city_known():
+    assert validate_city("timbuktu")[0] is True
+
+def test_city_unknown():
+    assert validate_city("Abuja")[0] is False
+
+def test_city_case():
+    assert validate_city("tImBuKtU")[0] is True
