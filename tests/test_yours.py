@@ -130,3 +130,37 @@ def test_city_unknown():
 
 def test_city_case():
     assert validate_city("tImBuKtU")[0] is True
+
+def test_condition_valid_values():
+    assert validate_condition("fragile")[0] is True
+    assert validate_condition("good")[0] is True
+    assert validate_condition("fair")[0] is True
+
+def test_condition_uppercase():
+    assert validate_condition("FRAGILE")[0] is True
+    assert validate_condition("GOOD")[0] is True
+    assert validate_condition("Fair")[0] is True
+
+def test_condition_invalid():
+    assert validate_condition("I was too lazy.")[0] is False
+
+def test_record_clean():
+    record = {
+        "id": "MS123",
+        "title": "A Great Manuscript",
+        "city": "timbuktu",
+        "year": "1500",
+        "condition": "good"
+    }
+    assert validate_record(record) == []
+
+def test_record_multiple_faults():
+    record = {
+        "id": "ms123",  # lowercase
+        "title": "  ",  # whitespace only
+        "city": "UnknownCity",  # not in known cities
+        "year": "2087",  # out of range
+        "condition": "excellent"  # invalid condition
+    }
+    reasons = validate_record(record)
+    assert len(reasons) == 5  # Expecting 5 reasons for failure
