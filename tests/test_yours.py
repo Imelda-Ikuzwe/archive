@@ -77,7 +77,19 @@ def test_condition_case():
 #   BOUNDARY   1099 and 1901 — one step outside, must be rejected
 #
 # TODO: write them here.
+def test_year_normal():
+    assert validate_year("1500")[0] is True
 
+def test_year_abnormal():
+    assert validate_year("not_a_year")[0] is False
+
+def test_year_extreme():
+    assert validate_year("1100")[0] is True
+    assert validate_year("1900")[0] is True
+
+def test_year_boundary():
+    assert validate_year("1099")[0] is False
+    assert validate_year("1901")[0] is False
 
 # ============================================================== your tests
 # Everything below is yours. Suggested coverage, in the order the marks are
