@@ -36,7 +36,36 @@ from archive.validation import (
 )
 from archive.queries import count_before, find_by_city, oldest, cities_summary
 
-
+Sample = [
+    {
+        "id": "MS001",
+        "title": "Tarikh al-Sudan",
+        "city": "Timbuktu",
+        "year": "1655",
+        "condition": "fragile",
+    },
+    {
+        "id": "MS002",
+        "title": "Kitab al-Tara'if",
+        "city": "Djenne",
+        "year": "1590",
+        "condition": "good",
+    },
+    {
+        "id": "MS003",
+        "title": "Risala fi'l-Nujum",
+        "city": "TIMBUKTU",  # Uppercase city variant
+        "year": "1548",
+        "condition": "fragile",
+    },
+    {
+        "id": "MS004",
+        "title": "Tadhkirat al-Nisian",
+        "city": "timbuktu",  # Lowercase city variant
+        "year": "1548",       # Tie for oldest year (1548) with MS003
+        "condition": "fair",
+    },
+    ]
 # ====================================================== WORKED EXAMPLE
 # The four kinds of test data from Session 2, shown on validate_condition.
 # Study the PATTERN here, then apply it yourself to the other fields.
@@ -144,6 +173,8 @@ def test_condition_uppercase():
 def test_condition_invalid():
     assert validate_condition("I was too lazy.")[0] is False
 
+
+
 def test_record_clean():
     record = {
         "id": "MS123",
@@ -164,3 +195,82 @@ def test_record_multiple_faults():
     }
     reasons = validate_record(record)
     assert len(reasons) == 5  # Expecting 5 reasons for failure
+
+
+
+def test_parse_line_splits_five_fields():
+    got = parse_line("MS012,Ibn al-Sudan,Timbuktu,1755,fragile")
+    assert got["id"] == "MS012"
+    assert got["title"] == "Ibn al-Sudan"
+    assert got["city"] == "Timbuktu"
+    assert got["year"] == "1755"
+    assert got["condition"] == "fragile"
+
+def test_parse_line_raises_on_four_fields():
+    with pytest.raises(MalformedRecordError):
+        parse_line("MS003,Cannot find a title,Timbuktu,good")
+
+def test_parse_line_raises_on_six_fields():
+    with pytest.raises(MalformedRecordError):
+        parse_line("MS208,Mali Manuscripts,Djenne,Mali,1644,fragile")
+
+def test_parse_line_whitespace_around_values():
+    got = parse_line("  MS012 ,Ibn al-Sudan  ,Timbuktu,  1755,fragile           ")
+    assert got["id"] == "MS012"
+    assert got["title"] == "Ibn al-Sudan"
+    assert got["city"] == "Timbuktu"
+    assert got["year"] == "1755"
+    assert got["condition"] == "fragile"
+
+
+
+def test_load_archive_missing_file_returns_empty():
+    records, rejected = load_archive("I_know_this_is_not_here.csv")
+    assert records == []
+    assert rejected == []
+
+def test_load_archive_reads_the_clean_file():
+    records, rejected = load_archive("data/archive.csv")
+    assert len(records) == 20
+    assert rejected == []
+
+def test_load_archive_reads_the_messy_file():
+    records, rejected = load_archive("data/messy.csv")
+    assert len(records) == 4
+    assert rejected == ["MS007,Ta'rikh al-Fattash,Timbuktu,,fragile","MS008,Sharh al-Mukhtasar,Djenne,1644","MS009,Al-Durr al-Manzum,Gao,c.1590,fair","MS011,Tanbih al-Ikhwan,Timbuktu,2087,good","MS013,Nayl al-Ibtihaj,Chinguetti,1901,good","MS14,Kashf al-Ghumma,Gao,1655,good","MS015,Ab,Djenne,1580,fair","MS016,Tuhfat al-Nuzzar,Kano,1720,good","MS017,Minah al-Rabb,Timbuktu,1603,excellent"]
+
+def test_queries_empty_list():
+    assert count_before([], 1600) == 0
+    assert find_by_city([], "TIMBUKTU") == []
+    assert oldest([]) == None
+    assert cities_summary([]) == []
+
+def test_queries_ties():
+    assert oldest(Sample) == {"id": "MS003","title": "Risala fi'l-Nujum","city": "TIMBUKTU","year": "1548","condition": "fragile"}
+
+def test_queries_case_insensitive_city():
+    assert find_by_city(Sample, "Timbuktu") == [
+{
+    "id": "MS001",
+    "title": "Tarikh al-Sudan",
+    "city": "Timbuktu",
+    "year": "1655",
+    "condition": "fragile",
+},
+{
+    "id": "MS003",
+    "title": "Risala fi'l-Nujum",
+    "city": "TIMBUKTU",  # Uppercase city variant
+    "year": "1548",
+    "condition": "fragile",
+},
+{
+    "id": "MS004",
+    "title": "Tadhkirat al-Nisian",
+    "city": "timbuktu",  # Lowercase city variant
+    "year": "1548",       # Tie for oldest year (1548) with MS003
+    "condition": "fair",
+}]
+
+
+
