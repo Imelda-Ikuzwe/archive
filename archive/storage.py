@@ -15,7 +15,7 @@ def parse_line(line):
     return dict(zip(FIELD_NAMES, fields))
 
 
-    #raise NotImplementedError("parse_line")
+    
 
 
 def load_archive(path):
@@ -42,8 +42,6 @@ def load_archive(path):
     
 
 
-    #raise NotImplementedError("load_archive")
-
 
 def save_archive(path, records):
     """Write every record to `path` as CSV, one per line, no header.
@@ -53,5 +51,4 @@ def save_archive(path, records):
             row = [str(record.get(field, '')) for field in FIELD_NAMES]
             f.write(','.join(row) + '\n')
     return None
-    #raise NotImplementedError("save_archive")
  
