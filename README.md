@@ -34,7 +34,7 @@
 
 *The brief gave you 1100–1900. That was a decision someone made, and it has costs. 1900 excludes a modern copy of an old text. 1100 excludes anything earlier. State whether you accept these bounds or would change them, and say what your choice throws away. An undefended range scores 1 of the 4 marks.*
 
-We choose 1100-2026 as our range" we chose 2026 because we want to include current records because we do not want to use old data, the current data matters. we do not want to include anything before 1100 because it would be outdated and would not help us much in the modern world.
+We choose 1100-1900 as our range" we chose 2026 because we want to include current records because we do not want to use old data, the current data matters. we do not want to include anything before 1100 because it would be outdated and would not help us much in the modern world.
 
 ---
 
@@ -165,11 +165,11 @@ def save_archive(path, records):
 | Test data | Value | Expected | Actual | Pass? |
 | --- | --- | --- | --- | --- |
 | Normal | 1655 | valid |  |  |
-| Abnormal |  |  |  |  |
+| Abnormal | c.1789 | invalid |  |  |
 | Extreme (low) | 1100 | valid |  |  |
-| Extreme (high) |  |  |  |  |
+| Extreme (high) | 1900 | valid |  |  |
 | Boundary (below) | 1099 | invalid |  |  |
-| Boundary (above) |  |  |  |  |
+| Boundary (above) |1901  | invalid |  |  |
 
 ### `_______________` *(one other field of your choice)*
 
