@@ -71,14 +71,14 @@ def cities_summary(records):
 
     Returns dict.
     """
-    city_count = {}
-    for record in records:
+    city_summary = {}
+    for record in records:              
         city = record["city"]
-        if city in city_count:
-            city_count[city] += 1
+        if city in city_summary:
+            city_summary[city] += 1
         else:
-            city_count[city] = 1
-    return city_count
+            city_summary[city] = 1
+    return city_summary
 
 
     
