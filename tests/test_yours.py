@@ -239,6 +239,15 @@ def test_load_archive_reads_the_messy_file():
     assert len(records) == 4
     assert rejected == ["MS007,Ta'rikh al-Fattash,Timbuktu,,fragile","MS008,Sharh al-Mukhtasar,Djenne,1644","MS009,Al-Durr al-Manzum,Gao,c.1590,fair","MS011,Tanbih al-Ikhwan,Timbuktu,2087,good","MS013,Nayl al-Ibtihaj,Chinguetti,1901,good","MS14,Kashf al-Ghumma,Gao,1655,good","MS015,Ab,Djenne,1580,fair","MS016,Tuhfat al-Nuzzar,Kano,1720,good","MS017,Minah al-Rabb,Timbuktu,1603,excellent"]
 
+
+def test_save_and_load_round_trip():
+    file_path = tmp_path / "archive_out.csv"
+    save_archive(file_path,Sample)
+    Good_records , Rejected = load_archive(file_path)
+    assert Rejected == []
+    assert Good_records == Sample
+
+
 def test_queries_empty_list():
     assert count_before([], 1600) == 0
     assert find_by_city([], "TIMBUKTU") == []
