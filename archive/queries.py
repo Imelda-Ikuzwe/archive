@@ -19,7 +19,13 @@ def count_before(records, year):
 
     Returns int.
     """
-    raise NotImplementedError("count_before")
+    ans = 0
+    for record in records:
+        if int(record["year"]) < year:
+                ans += 1
+        return ans
+
+    
 
 
 def find_by_city(records, city):
@@ -30,8 +36,11 @@ def find_by_city(records, city):
 
     Returns list of dicts (empty list if none match).
     """
-    raise NotImplementedError("find_by_city")
-
+    City_list = []
+    for record in records:
+        if record["city"].casefold() == city.casefold():
+            City_list.append(record)
+    return City_list
 
 def oldest(records):
     """The record with the smallest year.
@@ -43,7 +52,13 @@ def oldest(records):
 
     Returns dict or None.
     """
-    raise NotImplementedError("oldest")
+    if not records:
+        return None
+    oldest_record = records[0]
+    for record in records:
+        if int(record["year"]) < int(oldest_record["year"]):
+            oldest_record = record
+    return oldest_record
 
 
 def cities_summary(records):
@@ -56,4 +71,14 @@ def cities_summary(records):
 
     Returns dict.
     """
-    raise NotImplementedError("cities_summary")
+    city_summary = {}
+    for record in records:              
+        city = record["city"]
+        if city in city_summary:
+            city_summary[city] += 1
+        else:
+            city_summary[city] = 1
+    return city_summary
+
+
+    
