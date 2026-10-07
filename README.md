@@ -85,7 +85,8 @@ We choose 1100-1900 as our range" because that is the year range of the Timbuktu
 
 ***(partner 1 name)*:** One thing my partner did that I will steal: One thing I would do differently next time:
 
-***(partner 2 name)*:** One thing my partner did that I will steal: One thing I would do differently next time:
+***(Luis)*:** One thing my partner did that I will steal: One thing I would do differently next time:
+    I think that he really put in a lot of work and we worked really well on this, he was collaborating really well.
 
 ---
 
